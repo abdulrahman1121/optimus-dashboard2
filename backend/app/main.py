@@ -173,7 +173,8 @@ async def health_check():
 @app.get("/metrics")
 async def get_metrics():
     record_http_request("metrics")
-    return PlainTextResponse(metrics.generate_latest())
+    from prometheus_client import generate_latest
+    return PlainTextResponse(generate_latest(registry))
 
 @app.get("/config/alert-rules")
 async def get_alert_rules():
